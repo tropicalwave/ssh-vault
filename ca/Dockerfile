@@ -5,5 +5,5 @@ RUN yum install -y unzip \
 RUN curl -sO https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
 	unzip vault_${VAULT_VERSION}_linux_amd64.zip && \
 	mv vault /usr/local/bin
-COPY initialize_ca /root/initialize_ca
+COPY initialize_ca.sh /root/initialize_ca.sh
 CMD sleep infinity

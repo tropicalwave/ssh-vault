@@ -1,20 +1,23 @@
+![shellcheck workflow](https://github.com/tropicalwave/ssh-vault/actions/workflows/shellcheck.yml/badge.svg)
+
 # Vault and SSH keys self-service
 
 ## Big picture
 
-This tutorial shows the use of SSH user key certificates
-using docker-compose
+This tutorial shows the use of SSH user key certificates with Vault
+using docker-compose. This setup will then allow users to connect
+to hosts via SSH based on their defined role in Vault.
 
 ## Overview
 
 Four machines will configured:
 
 1. Vault server
-2. CA server (and SSH client, but this role could also be assumed by any other host)
+2. CA server (including SSH client, but this could also be used from any other host)
 3. Web server (accepting logins for all global and web administrators)
 3. Database server (accepting logins for all global and DB administrators)
 
-Furthermore, three Vault users will be created with a password "pass":
+Furthermore, three Vault users will be created (with the Vault password "pass"):
 1. globaladmin (should be able to login on all hosts)
 2. dbadmin (should only be able to login on host db)
 3. webadmin (should only be able to login on host web)
@@ -25,9 +28,9 @@ The following commands need to be executed for this tutorial
 ```
 docker-compose up -d --build
 docker-compose logs vault | awk '/Token/ { print $NF }' >.vault-token
-cat .vault-token | docker-compose exec -T ca /root/initialize_ca
-docker-compose exec -T web /root/initialize_sshd
-docker-compose exec -T db /root/initialize_sshd
+cat .vault-token | docker-compose exec -T ca /root/initialize_ca.sh
+docker-compose exec -T web /root/initialize_sshd.sh
+docker-compose exec -T db /root/initialize_sshd.sh
 ```
 
 ## User perspective
