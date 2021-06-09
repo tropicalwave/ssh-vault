@@ -2,7 +2,7 @@
 set -e
 
 # Download public key of CA
-curl -o /etc/ssh/trusted-user-ca-keys.pem $VAULT_ADDR/v1/ssh-client-signer/public_key
+curl -o /etc/ssh/trusted-user-ca-keys.pem "$VAULT_ADDR/v1/ssh-client-signer/public_key"
 
 # Let SSHd use CA file
 echo "TrustedUserCAKeys /etc/ssh/trusted-user-ca-keys.pem" \
