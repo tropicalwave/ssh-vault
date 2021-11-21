@@ -1,6 +1,6 @@
 # Vault and SSH keys self-service
 
-![shellcheck workflow](https://github.com/tropicalwave/ssh-vault/actions/workflows/shellcheck.yml/badge.svg)
+[![GitHub Super-Linter](https://github.com/tropicalwave/ssh-vault/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 ## Big picture
 
