@@ -10,6 +10,8 @@ to hosts via SSH based on their defined role in Vault.
 
 ## Overview
 
+![Architecture](/images/architecture.svg)
+
 Four machines will configured:
 
 1. Vault server
