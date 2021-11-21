@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   vault:
-    image: vault:1.7.2
+    image: vault:1.9.0
     command: "/usr/local/bin/docker-entrypoint.sh server -dev"
     environment:
       - VAULT_ADDR=http://127.0.0.1:8200
@@ -11,7 +11,7 @@ services:
     build:
       context: ca/
       args:
-        VAULT_VERSION: "1.7.2"
+        VAULT_VERSION: "1.9.0"
     environment:
       - VAULT_ADDR=http://vault:8200
 
