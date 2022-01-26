@@ -5,7 +5,7 @@
 ## Big picture
 
 This tutorial shows the use of SSH user key certificates with Vault
-using docker-compose. This setup will then allow users to connect
+using podman-compose. This setup will then allow users to connect
 to hosts via SSH based on their defined role in Vault.
 
 ## Overview
@@ -28,11 +28,11 @@ Furthermore, three Vault users will be created (with the Vault password "pass"):
 
 The following commands need to be executed for this tutorial
 ```bash
-docker-compose up -d --build
-docker-compose logs vault | awk '/Token/ { print $NF }' >.vault-token
-cat .vault-token | docker-compose exec -T ca /root/initialize_ca.sh
-docker-compose exec -T web /root/initialize_sshd.sh
-docker-compose exec -T db /root/initialize_sshd.sh
+podman-compose up -d --build
+podman-compose logs vault | awk '/Token/ { print $NF }' >.vault-token
+cat .vault-token | podman-compose exec -T ca /root/initialize_ca.sh
+podman-compose exec -T web /root/initialize_sshd.sh
+podman-compose exec -T db /root/initialize_sshd.sh
 ```
 
 ## User perspective
@@ -41,14 +41,14 @@ docker-compose exec -T db /root/initialize_sshd.sh
 
 The following commands will allow you to log-in on the hosts web and db:
 ```bash
-docker-compose exec ca /bin/bash
+podman-compose exec ca /bin/bash
 > vault login -method=userpass username=globaladmin password=pass
 > vault write -field=signed_key ssh-client-signer/sign/itservice public_key=@$HOME/.ssh/id_rsa.pub > $HOME/.ssh/id_rsa-cert.pub
 ```
 
 The following commands will allow you to log-in only to the host web:
 ```bash
-docker-compose exec ca /bin/bash
+podman-compose exec ca /bin/bash
 > vault login -method=userpass username=webadmin password=pass
 > vault write -field=signed_key ssh-client-signer/sign/webteam public_key=@$HOME/.ssh/id_rsa.pub > $HOME/.ssh/id_rsa-cert.pub
 > ssh web
@@ -56,7 +56,7 @@ docker-compose exec ca /bin/bash
 
 The following commands will allow you to log-in only to the host db:
 ```bash
-docker-compose exec ca /bin/bash
+podman-compose exec ca /bin/bash
 > vault login -method=userpass username=dbadmin password=pass
 > vault write -field=signed_key ssh-client-signer/sign/dbteam public_key=@$HOME/.ssh/id_rsa.pub > $HOME/.ssh/id_rsa-cert.pub
 > ssh db
