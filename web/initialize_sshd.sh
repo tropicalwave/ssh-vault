@@ -16,8 +16,5 @@ echo "AuthorizedPrincipalsFile /etc/ssh/auth_principals/%u" \
 mkdir /etc/ssh/auth_principals
 echo -e 'web\nroot-everywhere' > /etc/ssh/auth_principals/root
 
-# Create SSH host keys
-ssh-keygen -A
-
-# Start SSHd
-/usr/sbin/sshd -p 22 -E /var/log/sshd.log
+# Reload SSHd
+systemctl reload sshd
