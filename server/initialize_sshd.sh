@@ -5,7 +5,7 @@ set -e
 curl -o /etc/ssh/trusted-user-ca-keys.pem "$VAULT_ADDR/v1/ssh-client-signer/public_key"
 
 # Allow server-specific principals and root-everywhere
-mkdir /etc/ssh/auth_principals
+mkdir -p /etc/ssh/auth_principals
 echo -e "${SERVERNAME}\nroot-everywhere" > /etc/ssh/auth_principals/root
 
 # Login to Vault to be able to work with it
