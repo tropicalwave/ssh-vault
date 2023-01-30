@@ -6,7 +6,11 @@
 
 This tutorial shows the use of SSH user key certificates with Vault
 using podman-compose. This setup will then allow users to connect
-to hosts via SSH based on their defined role in Vault.
+via SSH to hosts based on their defined role in Vault.
+
+The servers furthermore use SSH host key certificates (set up
+with Vault), ie. there is no need to verify the keys manually at
+login time.
 
 ## Overview
 
@@ -31,8 +35,8 @@ The following commands need to be executed for this tutorial
 podman-compose up -d --build
 podman-compose logs vault | awk '/Token/ { print $NF }' >.vault-token
 cat .vault-token | podman-compose exec -T ca /root/initialize_ca.sh
-podman-compose exec -T web /root/initialize_sshd.sh
-podman-compose exec -T db /root/initialize_sshd.sh
+cat .vault-token | podman-compose exec -T web /root/initialize_sshd.sh
+cat .vault-token | podman-compose exec -T db /root/initialize_sshd.sh
 ```
 
 ## User perspective
@@ -44,6 +48,7 @@ The following commands will allow you to log-in on the hosts web and db:
 podman-compose exec ca /bin/bash
 > vault login -method=userpass username=globaladmin password=pass
 > vault write -field=signed_key ssh-client-signer/sign/itservice public_key=@$HOME/.ssh/id_rsa.pub > $HOME/.ssh/id_rsa-cert.pub
+> ssh ...
 ```
 
 The following commands will allow you to log-in only to the host web:

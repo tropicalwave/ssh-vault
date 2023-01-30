@@ -18,12 +18,18 @@ services:
 
   db:
     build:
-      context: db/
+      context: server/
+      args:
+        VAULT_VERSION: "1.11.4"
     environment:
       - VAULT_ADDR=http://vault:8200
+      - SERVERNAME=db
 
   web:
     build:
-      context: web/
+      context: server/
+      args:
+        VAULT_VERSION: "1.11.4"
     environment:
       - VAULT_ADDR=http://vault:8200
+      - SERVERNAME=web
