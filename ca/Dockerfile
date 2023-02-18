@@ -1,6 +1,6 @@
 FROM rockylinux/rockylinux:9
 ARG VAULT_VERSION
-RUN dnf install -y unzip openssh-clients && \
+RUN dnf install -y unzip openssh-clients systemd && \
     dnf clean all
 RUN curl -sO https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
 	unzip vault_${VAULT_VERSION}_linux_amd64.zip && \
