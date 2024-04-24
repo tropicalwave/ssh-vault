@@ -6,7 +6,7 @@ curl -o /etc/ssh/trusted-user-ca-keys.pem "$VAULT_ADDR/v1/ssh-client-signer/publ
 
 # Allow server-specific principals and root-everywhere
 mkdir -p /etc/ssh/auth_principals
-echo -e "${SERVERNAME}\nroot-everywhere" > /etc/ssh/auth_principals/root
+echo -e "${SERVERNAME}\nroot-everywhere" >/etc/ssh/auth_principals/root
 
 # Login to Vault to be able to work with it
 vault login -
@@ -14,7 +14,7 @@ vault login -
 # Acquire certificate for SSH host key
 vault write -field=signed_key ssh-host-signer/sign/hostrole \
     cert_type=host \
-    public_key=@/etc/ssh/ssh_host_rsa_key.pub > /etc/ssh/ssh_host_rsa_key-cert.pub
+    public_key=@/etc/ssh/ssh_host_rsa_key.pub >/etc/ssh/ssh_host_rsa_key-cert.pub
 
 chmod 0640 /etc/ssh/ssh_host_rsa_key-cert.pub
 

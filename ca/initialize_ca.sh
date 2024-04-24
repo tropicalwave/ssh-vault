@@ -17,7 +17,8 @@ vault write ssh-client-signer/config/ca \
     private_key=@/root/user_ca \
     public_key=@/root/user_ca.pub
 
-vault write ssh-client-signer/roles/itservice -<<"EOF"
+# editorconfig-checker-disable
+vault write ssh-client-signer/roles/itservice - <<"EOF"
 {
   "allow_user_certificates": true,
   "allowed_users": "root-everywhere",
@@ -35,7 +36,7 @@ vault write ssh-client-signer/roles/itservice -<<"EOF"
 }
 EOF
 
-vault write ssh-client-signer/roles/dbteam -<<"EOF"
+vault write ssh-client-signer/roles/dbteam - <<"EOF"
 {
   "allow_user_certificates": true,
   "allowed_users": "db",
@@ -53,7 +54,7 @@ vault write ssh-client-signer/roles/dbteam -<<"EOF"
 }
 EOF
 
-vault write ssh-client-signer/roles/webteam -<<"EOF"
+vault write ssh-client-signer/roles/webteam - <<"EOF"
 {
   "allow_user_certificates": true,
   "allowed_users": "web",
@@ -70,6 +71,7 @@ vault write ssh-client-signer/roles/webteam -<<"EOF"
   "allow_user_key_ids": "false"
 }
 EOF
+# editorconfig-checker-enable
 
 # Create some ordinary Vault users and attach policies to them.
 vault auth enable userpass
@@ -85,13 +87,13 @@ vault write auth/userpass/users/webadmin \
     password=pass \
     policies=webadmin-policy
 
-echo 'path "ssh-client-signer/sign/itservice" { capabilities = [ "create", "update"] }' | \
+echo 'path "ssh-client-signer/sign/itservice" { capabilities = [ "create", "update"] }' |
     vault policy write its-policy -
 
-echo 'path "ssh-client-signer/sign/dbteam" { capabilities = [ "create", "update"] }' | \
+echo 'path "ssh-client-signer/sign/dbteam" { capabilities = [ "create", "update"] }' |
     vault policy write dbadmin-policy -
 
-echo 'path "ssh-client-signer/sign/webteam" { capabilities = [ "create", "update"] }' | \
+echo 'path "ssh-client-signer/sign/webteam" { capabilities = [ "create", "update"] }' |
     vault policy write webadmin-policy -
 
 # Initialize SSH key for root user (just for convenience)

@@ -1,3 +1,5 @@
+# checkov:skip=CKV_DOCKER_2:healthcheck not enabled
+# checkov:skip=CKV_DOCKER_3:no user necessary
 FROM rockylinux/rockylinux:9
 ARG VAULT_VERSION
 RUN dnf install -y unzip openssh-clients systemd && \
