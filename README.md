@@ -24,6 +24,7 @@ Four machines will configured:
 4. Database server (accepting logins for all global and DB administrators)
 
 Furthermore, three Vault users will be created (with the Vault password "pass"):
+
 1. globaladmin (should be able to login on all hosts)
 2. dbadmin (should only be able to login on host db)
 3. webadmin (should only be able to login on host web)
@@ -31,6 +32,7 @@ Furthermore, three Vault users will be created (with the Vault password "pass"):
 ## Initialization
 
 The following commands need to be executed for this tutorial
+
 ```bash
 podman-compose up -d --build
 podman-compose logs vault | awk '/Token/ { print $NF }' >.vault-token
@@ -44,6 +46,7 @@ cat .vault-token | podman-compose exec -T db /root/initialize_sshd.sh
 ### Creating SSH key and a certificate
 
 The following commands will allow you to log-in on the hosts web and db:
+
 ```bash
 podman-compose exec ca /bin/bash
 > vault login -method=userpass username=globaladmin password=pass
@@ -52,6 +55,7 @@ podman-compose exec ca /bin/bash
 ```
 
 The following commands will allow you to log-in only to the host web:
+
 ```bash
 podman-compose exec ca /bin/bash
 > vault login -method=userpass username=webadmin password=pass
@@ -60,6 +64,7 @@ podman-compose exec ca /bin/bash
 ```
 
 The following commands will allow you to log-in only to the host db:
+
 ```bash
 podman-compose exec ca /bin/bash
 > vault login -method=userpass username=dbadmin password=pass
@@ -69,6 +74,6 @@ podman-compose exec ca /bin/bash
 
 ## Further reading
 
-* <https://abridge2devnull.com/posts/2018/05/leveraging-hashicorp-vaults-ssh-secrets-engine/>
-* <https://engineering.fb.com/security/scalable-and-secure-access-with-ssh/>
-* <https://www.vaultproject.io/docs/secrets/ssh/signed-ssh-certificates>
+- <https://abridge2devnull.com/posts/2018/05/leveraging-hashicorp-vaults-ssh-secrets-engine/>
+- <https://engineering.fb.com/security/scalable-and-secure-access-with-ssh/>
+- <https://www.vaultproject.io/docs/secrets/ssh/signed-ssh-certificates>
