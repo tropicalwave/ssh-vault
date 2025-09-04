@@ -13,6 +13,7 @@ services:
       context: ca/
       args:
         VAULT_VERSION: "${VAULT_VERSION}"
+    hostname: ca
     environment:
       - VAULT_ADDR=http://vault:8200
 
@@ -24,6 +25,7 @@ services:
     environment:
       - VAULT_ADDR=http://vault:8200
       - SERVERNAME=db
+    hostname: db
     cap_add:
       - SYS_CHROOT
 
@@ -35,5 +37,6 @@ services:
     environment:
       - VAULT_ADDR=http://vault:8200
       - SERVERNAME=web
+    hostname: web
     cap_add:
       - SYS_CHROOT

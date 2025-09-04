@@ -14,15 +14,16 @@ vault login -
 # Acquire certificate for SSH host key
 vault write -field=signed_key ssh-host-signer/sign/hostrole \
     cert_type=host \
-    public_key=@/etc/ssh/ssh_host_rsa_key.pub >/etc/ssh/ssh_host_rsa_key-cert.pub
+    valid_principals="$(hostname)" \
+    public_key=@/etc/ssh/ssh_host_ed25519_key.pub >/etc/ssh/ssh_host_ed25519_key-cert.pub
 
-chmod 0640 /etc/ssh/ssh_host_rsa_key-cert.pub
+chmod 0640 /etc/ssh/ssh_host_ed25519_key-cert.pub
 
 cat >>/etc/ssh/sshd_config <<EOF
 TrustedUserCAKeys /etc/ssh/trusted-user-ca-keys.pem
 AuthorizedPrincipalsFile /etc/ssh/auth_principals/%u
-HostKey /etc/ssh/ssh_host_rsa_key
-HostCertificate /etc/ssh/ssh_host_rsa_key-cert.pub
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub
 EOF
 
 # Reload SSHd
