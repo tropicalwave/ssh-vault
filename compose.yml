@@ -3,7 +3,7 @@ version: "3.1"
 
 services:
   vault:
-    image: hashicorp/vault:${VAULT_VERSION}
+    image: docker.io/hashicorp/vault:${VAULT_VERSION}
     command: "/usr/local/bin/docker-entrypoint.sh server -dev"
     environment:
       - VAULT_ADDR=http://127.0.0.1:8200
